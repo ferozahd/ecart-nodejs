@@ -1,12 +1,12 @@
 import mongoose, { Schema, Model, Types } from "mongoose";
-
+import { UserRole } from '../enums/user.role'
 /** User document interface (NO Document inheritance) */
 export interface IUser {
   _id: Types.ObjectId;
   name: string;
   email: string;
   passwordHash: string;
-  role: "USER" | "ADMIN";
+  role: UserRole
   createdAt: Date;
   updatedAt: Date;
 }
@@ -32,8 +32,8 @@ const userSchema = new Schema<IUser>(
     },
     role: {
       type: String,
-      enum: ["USER", "ADMIN"],
-      default: "USER"
+      enum: Object.values(UserRole),
+      default: UserRole.USER
     }
   },
   {
@@ -42,6 +42,6 @@ const userSchema = new Schema<IUser>(
 );
 
 /** Typed model */
-const UserModel: Model<IUser> =  mongoose.models.User || mongoose.model<IUser>("User", userSchema);
+const UserModel: Model<IUser> = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
 
 export default UserModel;
