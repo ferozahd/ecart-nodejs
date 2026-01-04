@@ -1,0 +1,151 @@
+openapi: 3.0.0
+info:
+  title: Item API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+
+tags:
+  - name: AuthController
+    description: Authentication endpoints
+  - name: ItemsController
+    description: Item CRUD endpoints
+
+
+paths:
+# 
+  /api/items:
+    get:
+      tags: [Items]
+      summary: Get all items
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '201':
+          description: Created
+
+  /api/items/{id}:
+    put:
+      summary: Update item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+    delete:
+      summary: Delete item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+
+  /api/auth/login:
+    post:
+      tags: [AuthController]
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginPostResource'
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginGetResource'
+        "401":
+          description: Invalid email or password
+        "500":
+          description: Internal server error
+
+
+
+
+  /api/auth/register:
+    post:
+      tags: [AuthController]
+      summary: Registration of a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterPostResource'
+      
+components:
+  schemas:
+
+    Item:
+      type: object
+      required: [name, description]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+
+    LoginPostResource:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    RegisterPostResource:
+      type: object
+      required: [name, email, password]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+    UserProfileGetResource:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 65a1f1d2c3b4a5e6f7g8h9i0
+        name:
+          type: string
+          example: Dawud
+        email:
+          type: string
+          example: dawud@test.com
+        role:
+          type: string
+          example: USER
+
+
+    
+    LoginGetResource:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT access token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        user:
+          $ref: '#/components/schemas/UserProfileGetResource'
+
