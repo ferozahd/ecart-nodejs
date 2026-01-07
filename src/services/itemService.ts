@@ -1,84 +1,24 @@
-import type { Request, Response, NextFunction } from "express";
-import Item from "../entities/item";
+import { ItemGetResource } from "../resources/item/item.get.resource";
+import { ItemPatchResource } from "../resources/item/item.patch.resource";
+import { ItemPostResource } from "../resources/item/item.post.resource";
 
-/** DTO for create/update */
-type ItemBody = {
-  name: string;
-  description: string;
-};
 
-/** Create */
-export const createItem = async (
-  req: Request<{}, {}, ItemBody>,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const { name, description } = req.body;
+export async function createItem(item:ItemPostResource):Promise<ItemGetResource>{
 
-    const newItem = await Item.create({ name, description });
-    res.status(201).json(newItem);
-  } catch (error) {
-    next(error);
-  }
-};
+}
 
-/** Read */
-export const getItems = async (
-  _req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const items = await Item.find();
-    res.status(200).json(items);
-  } catch (error) {
-    next(error);
-  }
-};
+export async function getItems():Promise<ItemGetResource[]>{
 
-/** Update */
-export const updateItem = async (
-  req: Request<{ id: string }, {}, ItemBody>,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const { name, description } = req.body;
+}
 
-    const updatedItem = await Item.findByIdAndUpdate(
-      req.params.id,
-      { name, description },
-      { new: true }
-    );
+export async function getAItemsById(id :string):Promise<ItemGetResource>{
 
-    if (!updatedItem) {
-      res.status(404).json({ message: "Item not found" });
-      return;
-    }
+}
 
-    res.status(200).json(updatedItem);
-  } catch (error) {
-    next(error);
-  }
-};
+export async function updateItem(id : string , payload : ItemPatchResource):Promise<ItemGetResource>{
 
-/** Delete */
-export const deleteItem = async (
-  req: Request<{ id: string }>,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const deleted = await Item.findByIdAndDelete(req.params.id);
+}
 
-    if (!deleted) {
-      res.status(404).json({ message: "Item not found" });
-      return;
-    }
-
-    res.status(204).send();
-  } catch (error) {
-    next(error);
-  }
-};
+export async function  deleteItem(id : string):Promise<void>{
+  
+}

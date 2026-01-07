@@ -5,7 +5,7 @@ export type LoginGetResources = {
 };
 
 
-type LoginUserGetResources = {
+export type LoginUserGetResources = {
     id: string;
     name: string;
     email: string;
@@ -20,7 +20,20 @@ export type RegisterPostResource = {
   password: string;
 };
 
+
+export type CustomerRegisterPostResource={
+  name: string;
+  email: string;
+  password: string;
+}
+
 export type LoginPostResource = {
+  email: string;
+  password: string;
+};
+
+
+export type CustomerLoginPostResource = {
   email: string;
   password: string;
 };

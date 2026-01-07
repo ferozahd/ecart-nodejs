@@ -1,7 +1,7 @@
 // src/utils/logger.js
 
-const log = (message) => {
+export function log(message:string){
   console.log(`[LOG]: ${message}`);
 };
 
-module.exports = log;
+

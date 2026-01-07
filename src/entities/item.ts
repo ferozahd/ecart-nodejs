@@ -4,6 +4,8 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface IItem extends Document {
   name: string;
   description: string;
+  price: number;
+  image: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -18,6 +20,16 @@ const itemSchema = new Schema<IItem>(
     description: {
       type: String,
       required: true
+    },
+    price:{
+      type:Number,
+      required:true,
+      default:0
+    },
+    image:{
+      type:String,
+      required:false,
+      default:undefined
     }
   },
   {
